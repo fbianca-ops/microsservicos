@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#555"/></marker></defs>
+<rect width="1000" height="500" fill="white"/>
+<g font-family="Arial" text-anchor="middle">
+  <rect x="70" y="195" width="190" height="90" rx="8" fill="#eef6fb" stroke="#4a86a8" stroke-width="2"/>
+  <text x="165" y="235" font-size="22" font-weight="700">Front-end</text>
+  <text x="165" y="260" font-size="14" fill="#555">Interface Web</text>
+
+  <rect x="405" y="195" width="190" height="90" rx="8" fill="#fff5e9" stroke="#bd7c29" stroke-width="2"/>
+  <text x="500" y="235" font-size="22" font-weight="700">Controller</text>
+  <text x="500" y="260" font-size="14" fill="#555">API do backend</text>
+
+  <rect x="740" y="85" width="190" height="90" rx="8" fill="#f2f7ef" stroke="#5f8c4b" stroke-width="2"/>
+  <text x="835" y="125" font-size="22" font-weight="700">Shipping</text>
+  <text x="835" y="150" font-size="14" fill="#555">Cálculo de frete</text>
+
+  <rect x="740" y="325" width="190" height="90" rx="8" fill="#f7eff8" stroke="#8f5b95" stroke-width="2"/>
+  <text x="835" y="365" font-size="22" font-weight="700">Inventory</text>
+  <text x="835" y="390" font-size="14" fill="#555">Controle de estoque</text>
+
+  <line x1="260" y1="240" x2="405" y2="240" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <text x="333" y="220" font-size="17" font-weight="700">REST</text>
+
+  <line x1="595" y1="220" x2="740" y2="145" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <line x1="595" y1="260" x2="740" y2="355" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <text x="666" y="150" font-size="17" font-weight="700">gRPC</text>
+  <text x="666" y="352" font-size="17" font-weight="700">gRPC</text>
+</g>
+</svg>
