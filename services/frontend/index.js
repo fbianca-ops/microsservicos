@@ -84,59 +84,87 @@ function calculateShipping(id, cep) {
         });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    const books = document.querySelector('.books');
+function addBookEvents() {
+    document.querySelectorAll('.button-shipping').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            const id = e.target.getAttribute('data-id');
+            const cep = document.querySelector(`.book[data-id="${id}"] input`).value;
+            calculateShipping(id, cep);
+        });
+    });
 
+    document.querySelectorAll('.button-buy').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            swal('Compra de livro', 'Sua compra foi realizada com sucesso', 'success');
+        });
+    });
+}
+
+function showBooks(booksElement, books) {
+    booksElement.innerHTML = '';
+    books.forEach((book) => {
+        booksElement.appendChild(newBook(book));
+    });
+    addBookEvents();
+}
+
+function listAllProducts(booksElement) {
     fetch(API_URL + '/products')
         .then((data) => {
             if (data.ok) {
                 return data.json();
             }
-
-            throw data.statusText;
+        throw data.statusText;
         })
         .then((data) => {
-            if (data) {
-                data.forEach((book) => {
-                    books.appendChild(newBook(book));
-                });
-
-                document
-                    .querySelectorAll('.button-shipping')
-                    .forEach((btn) => {
-                        btn.addEventListener('click', (e) => {
-                            const id =
-                                e.target.getAttribute('data-id');
-
-                            const cep =
-                                document.querySelector(
-                                    `.book[data-id="${id}"] input`
-                                ).value;
-
-                            calculateShipping(id, cep);
-                        });
-                    });
-
-                document
-                    .querySelectorAll('.button-buy')
-                    .forEach((btn) => {
-                        btn.addEventListener('click', () => {
-                            swal(
-                                'Compra de livro',
-                                'Sua compra foi realizada com sucesso',
-                                'success'
-                            );
-                        });
-                    });
-            }
+            showBooks(booksElement, data);
         })
         .catch((err) => {
-            swal(
-                'Erro',
-                'Erro ao listar os produtos',
-                'error'
-            );
-
+            swal('Erro', 'Erro ao listar os produtos', 'error');
             console.error(err);
         });
+}
+
+function searchProductByID(booksElement, id) {
+    fetch(API_URL + '/product/' + id)
+        .then((data) => {
+            if (data.ok) {
+                return data.json();
+            }
+            throw data.statusText;
+        })
+        .then((book) => {
+            if (!book || !book.id) {
+                swal('Produto não encontrado', 'Não existe livro com esse ID', 'warning');
+                return;
+            }
+            showBooks(booksElement, [book]);
+        })
+        .catch((err) => {
+            swal('Erro', 'Erro ao pesquisar o produto', 'error');
+            console.error(err);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const books = document.querySelector('.books');
+    const productId = document.querySelector('#product-id');
+    const searchButton = document.querySelector('#button-search');
+    const listAllButton = document.querySelector('#button-list-all');
+
+    listAllProducts(books);
+
+    searchButton.addEventListener('click', () => {
+        const id = productId.value;
+        if (!id) {
+            swal('Atenção', 'Digite o ID do livro', 'warning');
+            return;
+        }
+        searchProductByID(books, id);
+    });
+
+    listAllButton.addEventListener('click', () => {
+        productId.value = '';
+        listAllProducts(books);
+    });
 });
